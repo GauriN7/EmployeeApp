@@ -5,6 +5,9 @@ const cors = require('cors');
 const app = express();
 const path = require('path');
 
+// Load environment variables
+require('dotenv').config();
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname+'/dist/FrontEnd')));
@@ -20,7 +23,9 @@ app.use((req, res, next) => {
 // ================================
 
 // Task2: create mongoDB connection 
-mongoose.connect('mongodb+srv://gauri224060:voihewzfMIymWrtO@cluster0.gf8u0ug.mongodb.net/employeeDB?retryWrites=true&w=majority&appName=Cluster0', {
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/employeeDB';
+
+mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
